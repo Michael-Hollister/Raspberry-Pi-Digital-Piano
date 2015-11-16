@@ -5,7 +5,7 @@
 CC = g++
 CFLAGS = -std=c++14 -Wall -Wextra -Werror -O2
 INCLUDES = -IInclude
-LIBS = -lwiringPi
+LIBS = -lwiringPi -lwiringPiDev
 
 all: Main.cpp
 	$(CC) $(CFLAGS) -o Raspberry-Pi-Digital-Piano Main.cpp $(INCLUDES) $(LIBS)
