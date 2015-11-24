@@ -3,18 +3,21 @@
 #include <wiringPi.h>
 #include <lcd.h>
 #include <mcp23017.h>
+#include <SFML/Audio.hpp>
+#include "Main.h"
+
 using namespace std;
 
-void instrumentChange(string, &string);
-void octaveChange(string, string, &string);
-void displayChange(string, string);
-void initialization();
 
 // Hardware powers on start up
 
 int main()
 {
+	initialization();
 
+	system("sleep 10");
+
+	/*
    string currentInstrument;
    string currentOctave;
 
@@ -60,49 +63,72 @@ int main()
             displayChange(currentInstrument, currentOctave);
          }
       }
-   //}
+   //}*/
 
    return 0; // Exit program
 }
 
-   void displayChange(Instrument currentInstrument, Octave currentOctave) // Function to change display values
-   {
-      // Change instrument on display
-      string = Instrument;
+void initialization(void) {
+	wiringPiSetupSys();
 
-      switch (currentInstrument)
-      {
-      case Piano : 
-         Instrument = "Piano";
-         break;
-      case Guitar :
-         Instrument = "Guitar";
-         break;
-      case Trumpet :
-         Instrument = "Trumpet";
-         break;
-      }
+	// --- Code snippet from http://wiringpi.com/examples/adafruit-rgb-lcd-plate-and-wiringpi/ 
+	mcp23017Setup(AF_BASE, 0x20);
+	lcdHandle = lcdInit(2, 16, 4, AF_RS, AF_E, AF_DB4, AF_DB5, AF_DB6, AF_DB7, 0, 0, 0, 0);
 
-      lcdPosition(lcdHandle, 0, 0); 
-      lcdPuts(lcdHandle, "Instrument: " + Instrument);
+	if (lcdHandle < 0)
+	{
+		fprintf(stderr, "lcdInit failed\n");
+		exit(EXIT_FAILURE);
+	}
+	// ---
 
-      // Change octave on display
-      string = Octave;
+	// Defaults setup
+	currentInstrument = Instrument::Piano;
+	currentOctave = Octave::Medium;
 
-      switch (currentOctave)
-      {
-      case Low :
-         Octave = "Low";
-         break;
-      case Medium :
-         Octave = "Medium";
-         break;
-      case High :
-         Octave = "High";
-         break;
-      }
+	displayChange(currentInstrument, currentOctave);
 
-      lcdPosition(lcdHandle, 0, 1);
-      lcdPuts(lcdHandle, "Octave: " + Octave);
-   }
+
+}
+
+
+void displayChange(Instrument currentInstrument, Octave currentOctave) // Function to change display values
+{
+    // Change instrument on display
+    string instrument = "Instrument: ";
+
+    switch (currentInstrument)
+    {
+    case Piano : 
+		instrument += "Piano";
+        break;
+    case Guitar :
+		instrument += "Guitar";
+        break;
+    case Trumpet :
+		instrument += "Trumpet";
+        break;
+    }
+
+    lcdPosition(lcdHandle, 0, 0); 
+    lcdPuts(lcdHandle, instrument.c_str());
+
+    // Change octave on display
+    string octave = "Octave: ";
+
+    switch (currentOctave)
+    {
+    case Low :
+		octave =+ "Low";
+        break;
+    case Medium :
+		octave =+ "Medium";
+        break;
+    case High :
+		octave =+ "High";
+        break;
+    }
+
+    lcdPosition(lcdHandle, 0, 1);
+    lcdPuts(lcdHandle, octave.c_str());
 }
