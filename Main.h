@@ -46,8 +46,8 @@ enum Button {
 	AS = 27,
 	B = 22,
 	C_High = 5,
-	InstrumentChange = 6,
-	OctaveChange = 13
+	InstrumentChange = 17,
+	OctaveChange = 4
 };
 
 enum Instrument {

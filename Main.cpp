@@ -17,6 +17,8 @@ int main()
 
 	system("sleep 10");
 
+
+
 	/*
    string currentInstrument;
    string currentOctave;
@@ -68,12 +70,53 @@ int main()
    return 0; // Exit program
 }
 
+
+static void adafruitLCDSetup(int colour)
+{
+	int i;
+
+	// temp for compile
+	colour = colour;
+
+	//	Backlight LEDs
+
+	pinMode(AF_RED, OUTPUT);
+	pinMode(AF_GREEN, OUTPUT);
+	pinMode(AF_BLUE, OUTPUT);
+	//setBacklightColour(colour);
+
+	//	Input buttons
+
+	for (i = 0; i <= 4; ++i)
+	{
+		pinMode(AF_BASE + i, INPUT);
+		pullUpDnControl(AF_BASE + i, PUD_UP);	// Enable pull-ups, switches close to 0v
+	}
+
+	// Control signals
+
+	pinMode(AF_RW, OUTPUT); digitalWrite(AF_RW, LOW);	// Not used with wiringPi - always in write mode
+
+														// The other control pins are initialised with lcdInit ()
+
+	lcdHandle = lcdInit(2, 16, 4, AF_RS, AF_E, AF_DB4, AF_DB5, AF_DB6, AF_DB7, 0, 0, 0, 0);
+
+	if (lcdHandle < 0)
+	{
+		fprintf(stderr, "lcdInit failed\n");
+		exit(EXIT_FAILURE);
+	}
+}
+
+
+
 void initialization(void) {
 	wiringPiSetupSys();
 
 	// --- Code snippet from http://wiringpi.com/examples/adafruit-rgb-lcd-plate-and-wiringpi/ 
 	mcp23017Setup(AF_BASE, 0x20);
-	lcdHandle = lcdInit(2, 16, 4, AF_RS, AF_E, AF_DB4, AF_DB5, AF_DB6, AF_DB7, 0, 0, 0, 0);
+	adafruitLCDSetup(1);
+	//lcdHandle = lcdInit(2, 16, 4, AF_RS, AF_E, AF_DB4, AF_DB5, AF_DB6, AF_DB7, 0, 0, 0, 0);
 
 	if (lcdHandle < 0)
 	{
@@ -83,7 +126,7 @@ void initialization(void) {
 	// ---
 
 	// Defaults setup
-	currentInstrument = Instrument::Piano;
+	currentInstrument = Instrument::Trumpet;
 	currentOctave = Octave::Medium;
 
 	displayChange(currentInstrument, currentOctave);
@@ -92,10 +135,12 @@ void initialization(void) {
 }
 
 
+
+
 void displayChange(Instrument currentInstrument, Octave currentOctave) // Function to change display values
 {
     // Change instrument on display
-    string instrument = "Instrument: ";
+    string instrument = "Inst: ";
 
     switch (currentInstrument)
     {
@@ -114,18 +159,18 @@ void displayChange(Instrument currentInstrument, Octave currentOctave) // Functi
     lcdPuts(lcdHandle, instrument.c_str());
 
     // Change octave on display
-    string octave = "Octave: ";
+    string octave = "Octa: ";
 
     switch (currentOctave)
     {
     case Low :
-		octave =+ "Low";
+		octave += "Low";
         break;
     case Medium :
-		octave =+ "Medium";
+		octave += "Medium";
         break;
     case High :
-		octave =+ "High";
+		octave += "High";
         break;
     }
 
