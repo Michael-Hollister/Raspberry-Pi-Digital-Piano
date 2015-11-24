@@ -1,31 +1,28 @@
 #include <iostream>
 #include <string>
 #include <wiringPi.h>
+#include <lcd.h>
+#include <mcp23017.h>
 using namespace std;
 
 void instrumentChange(string, &string);
 void octaveChange(string, string, &string);
 void displayChange(string, string);
+void initialization();
 
-// Press a button to turn on the piano and display
+// Hardware powers on start up
 
 int main()
 {
+   initialization();
+
    string currentInstrument;
    string currentOctave;
 
-   // Default settings for piano
-   instrumentChange("piano", currentInstrument);
-   octaveChange("piano", "medium", currentOctave);
-
-   // Default settings for display
-   displayChange(currentInstrument, currentOctave);
-
-   bool offButton;
    bool instrumentButton;
    bool octaveButton;
 
-   while (offButton != 1) // While the off button isn't pressed...
+   while (1) // Infinite loop
    {
       while (instrumentButton == 1) // While the instrument button is pressed...
       {
@@ -64,9 +61,21 @@ int main()
             displayChange(currentInstrument, currentOctave);
          }
       }
-   }
+   //}
 
    return 0; // Exit program
+}
+
+void initialization()
+{
+   //Initialization code
+
+   // Default settings for piano
+   instrumentChange("piano", currentInstrument);
+   octaveChange("piano", "medium", currentOctave);
+
+   // Default settings for display
+   displayChange(currentInstrument, currentOctave);
 }
 
 void instrumentChange(string instrument, string &newInstrument) // Function for changing instruments
