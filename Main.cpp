@@ -14,7 +14,6 @@ void initialization();
 
 int main()
 {
-   initialization();
 
    string currentInstrument;
    string currentOctave;
@@ -66,110 +65,44 @@ int main()
    return 0; // Exit program
 }
 
-void initialization()
-{
-   //Initialization code
-
-   // Default settings for piano
-   instrumentChange("piano", currentInstrument);
-   octaveChange("piano", "medium", currentOctave);
-
-   // Default settings for display
-   displayChange(currentInstrument, currentOctave);
-}
-
-void instrumentChange(string instrument, string &newInstrument) // Function for changing instruments
-{
-   if (instrument == "piano")
+   void displayChange(Instrument currentInstrument, Octave currentOctave) // Function to change display values
    {
-      // Switch all button sound files to medium piano
+      // Change instrument on display
+      string = Instrument;
 
-      newInstrument = "piano";
-   }
-   else if (instrument == "guitar")
-   {
-      // Switch all button sound files to medium guitar
-
-      newInstrument = "guitar";
-   }
-   else
-   {
-      // Switch all button sound files to medium trumpet
-
-      newInstrument = "trumpet"
-   }
-}
-
-void octaveChange(string instrument, string octave, string &newOctave) // Function for changing octaves
-{
-   if (instrument == "piano")
-   {
-      if (octave == "low")
+      switch (currentInstrument)
       {
-         // Switch all button sound files to low piano
-
-         newOctave = "low";
+      case Piano : 
+         Instrument = "Piano";
+         break;
+      case Guitar :
+         Instrument = "Guitar";
+         break;
+      case Trumpet :
+         Instrument = "Trumpet";
+         break;
       }
-      else if (octave == "medium")
+
+      lcdPosition(lcdHandle, 0, 0); 
+      lcdPuts(lcdHandle, "Instrument: " + Instrument);
+
+      // Change octave on display
+      string = Octave;
+
+      switch (currentOctave)
       {
-         // Switch all button sound files to medium piano
-
-         newOctave = "medium";
+      case Low :
+         Octave = "Low";
+         break;
+      case Medium :
+         Octave = "Medium";
+         break;
+      case High :
+         Octave = "High";
+         break;
       }
-      else
-      {
-         // Switch all button sound files to high piano
 
-         newOctave = "high";
-      }
-   }
-   else if (instrument == "guitar")
-   {
-      if (octave == "low")
-      {
-         // Switch all button sound files to low guitar
-
-         newOctave = "low";
-      }
-      else if (octave == "medium")
-      {
-         // Switch all button sound files to medium guitar
-
-         newOctave = "medium";
-      }
-      else
-      {
-         // Switch all button sound files to high guitar
-
-         newOctave = "high";
-      }
-   }
-   else
-   {
-      if (octave == "low")
-      {
-         // Switch all button sound files to low trumpet
-
-         newOctave = "low";
-      }
-      else if (octave == "medium")
-      {
-         // Switch all button sound files to medium trumpet
-
-         newOctave = "medium";
-      }
-      else
-      {
-         // Switch all button sound files to high trumpet
-
-         newOctave = "high";
-      }
-   }
-
-   void displayChange(string instrument, string octave)
-   {
-      // Displays instrument and octave
-      cout << "Instrument: " << instrument << endl;
-      cout << "Octave: " << octave;
+      lcdPosition(lcdHandle, 0, 1);
+      lcdPuts(lcdHandle, "Octave: " + Octave);
    }
 }
