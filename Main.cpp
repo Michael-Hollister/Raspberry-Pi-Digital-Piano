@@ -8,16 +8,11 @@
 
 using namespace std;
 
-
-// Hardware powers on start up
-
 int main()
 {
 	initialization();
 
 	system("sleep 10");
-
-
 
 	/*
    string currentInstrument;
@@ -70,7 +65,6 @@ int main()
    return 0; // Exit program
 }
 
-
 static void adafruitLCDSetup(int colour)
 {
 	int i;
@@ -108,8 +102,6 @@ static void adafruitLCDSetup(int colour)
 	}
 }
 
-
-
 void initialization(void) {
 	wiringPiSetupSys();
 
@@ -126,16 +118,47 @@ void initialization(void) {
 	// ---
 
 	// Defaults setup
-	currentInstrument = Instrument::Trumpet;
+	currentInstrument = Instrument::Piano;
 	currentOctave = Octave::Medium;
 
 	displayChange(currentInstrument, currentOctave);
-
-
 }
 
+void instrumentChange(Instrument currentInstrument, Octave currentOctave) // Function to change instrument
+{
+   switch (currentInstrument)
+   {
+   case Piano :
+      currentInstrument = Instrument::Guitar;
+      break;
+   case Guitar :
+      currentInstrument = Instrument::Trumpet;
+      break;
+   case Trumpet :
+      currentInstrument = Instrument::Piano;
+      break;
+   }
 
+   displayChange(currentInstrument, currentOctave);
+}
 
+void octaveChange(Instrument currentInstrument, Octave currentOctave) // Function to change octave
+{
+   switch (currentOctave)
+   {
+   case Low:
+      currentOctave = Octave::Medium;
+      break;
+   case Medium:
+      currentOctave = Octave::High;
+      break;
+   case High:
+      currentOctave = Octave::Low;
+      break;
+   }
+
+   displayChange(currentInstrument, currentOctave);
+}
 
 void displayChange(Instrument currentInstrument, Octave currentOctave) // Function to change display values
 {
