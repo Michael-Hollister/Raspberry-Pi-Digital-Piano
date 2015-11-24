@@ -19,7 +19,7 @@ enum Button {
 	A = 17,
 	AS = 27,
 	B = 22,
-	C = 5,
+	C_High = 5,
 	InstrumentChange = 6,
 	OctaveChange = 13
 };
