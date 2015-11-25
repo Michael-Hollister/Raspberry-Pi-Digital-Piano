@@ -178,9 +178,6 @@ void displayChange(Instrument currentInstrument, Octave currentOctave) // Functi
         break;
     }
 
-    lcdPosition(lcdHandle, 0, 0); 
-    lcdPuts(lcdHandle, instrument.c_str());
-
     // Change octave on display
     string octave = "Octa: ";
 
@@ -196,6 +193,11 @@ void displayChange(Instrument currentInstrument, Octave currentOctave) // Functi
 		octave += "High";
         break;
     }
+
+	lcdClear(lcdHandle);
+
+	lcdPosition(lcdHandle, 0, 0);
+	lcdPuts(lcdHandle, instrument.c_str());
 
     lcdPosition(lcdHandle, 0, 1);
     lcdPuts(lcdHandle, octave.c_str());
