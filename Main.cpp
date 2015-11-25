@@ -124,7 +124,7 @@ void initialization(void) {
 	displayChange(currentInstrument, currentOctave);
 }
 
-void instrumentChange(Instrument currentInstrument, Octave currentOctave) // Function to change instrument
+void instrumentChange(Instrument & currentInstrument) // Function to change instrument
 {
    switch (currentInstrument)
    {
@@ -142,7 +142,7 @@ void instrumentChange(Instrument currentInstrument, Octave currentOctave) // Fun
    displayChange(currentInstrument, currentOctave);
 }
 
-void octaveChange(Instrument currentInstrument, Octave currentOctave) // Function to change octave
+void octaveChange(Octave & currentOctave) // Function to change octave
 {
    switch (currentOctave)
    {
