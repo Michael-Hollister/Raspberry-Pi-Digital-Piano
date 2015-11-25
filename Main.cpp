@@ -65,34 +65,19 @@ int main()
    return 0; // Exit program
 }
 
-static void adafruitLCDSetup(int colour)
-{
-	int i;
+void initialization(void) {
+	wiringPiSetupGpio();
 
-	// temp for compile
-	colour = colour;
-
+	// --- Code snippet from http://wiringpi.com/examples/adafruit-rgb-lcd-plate-and-wiringpi/ 
+	mcp23017Setup(AF_BASE, 0x20);
+	
 	//	Backlight LEDs
-
 	pinMode(AF_RED, OUTPUT);
 	pinMode(AF_GREEN, OUTPUT);
 	pinMode(AF_BLUE, OUTPUT);
-	//setBacklightColour(colour);
-
-	//	Input buttons
-
-	for (i = 0; i <= 4; ++i)
-	{
-		pinMode(AF_BASE + i, INPUT);
-		pullUpDnControl(AF_BASE + i, PUD_UP);	// Enable pull-ups, switches close to 0v
-	}
-
-	// Control signals
-
 	pinMode(AF_RW, OUTPUT); digitalWrite(AF_RW, LOW);	// Not used with wiringPi - always in write mode
-
 														// The other control pins are initialised with lcdInit ()
-
+	
 	lcdHandle = lcdInit(2, 16, 4, AF_RS, AF_E, AF_DB4, AF_DB5, AF_DB6, AF_DB7, 0, 0, 0, 0);
 
 	if (lcdHandle < 0)
@@ -100,22 +85,9 @@ static void adafruitLCDSetup(int colour)
 		fprintf(stderr, "lcdInit failed\n");
 		exit(EXIT_FAILURE);
 	}
-}
-
-void initialization(void) {
-	wiringPiSetupSys();
-
-	// --- Code snippet from http://wiringpi.com/examples/adafruit-rgb-lcd-plate-and-wiringpi/ 
-	mcp23017Setup(AF_BASE, 0x20);
-	adafruitLCDSetup(1);
-	//lcdHandle = lcdInit(2, 16, 4, AF_RS, AF_E, AF_DB4, AF_DB5, AF_DB6, AF_DB7, 0, 0, 0, 0);
-
-	if (lcdHandle < 0)
-	{
-		fprintf(stderr, "lcdInit failed\n");
-		exit(EXIT_FAILURE);
-	}
 	// ---
+
+
 
 	// Defaults setup
 	currentInstrument = Instrument::Piano;
