@@ -34,7 +34,10 @@ namespace Button {
 	namespace Data {
 		struct ButtonData {
 			bool pressed = false;
+			bool dampSound = false;
+			float soundVolume = 100;
 
+			sf::Sound sound;
 		};
 
 		ButtonData C;
@@ -91,8 +94,166 @@ enum Octave {
 
 void initialization(void);
 void pinInitialization(void);
+void soundInitialization(void);
+
+void readNoteButtonInput(int pin, Button::Data::ButtonData & data);
 void instrumentChange(Instrument & currentInstrument);
 void octaveChange(Octave & currentOctave);
+void soundChange(Instrument currentInstrument, Octave currentOctave);
 void displayChange(Instrument currentInstrument, Octave currentOctave);
+
+namespace SoundBuffer {
+	const float dampingConstant = 0.0018;
+
+	namespace Piano {
+		namespace High {
+			sf::SoundBuffer C;
+			sf::SoundBuffer CS;
+			sf::SoundBuffer D;
+			sf::SoundBuffer DS;
+			sf::SoundBuffer E;
+			sf::SoundBuffer F;
+			sf::SoundBuffer FS;
+			sf::SoundBuffer G;
+			sf::SoundBuffer GS;
+			sf::SoundBuffer A;
+			sf::SoundBuffer AS;
+			sf::SoundBuffer B;
+			sf::SoundBuffer C_High;
+		}
+
+		namespace Medium {
+			sf::SoundBuffer C;
+			sf::SoundBuffer CS;
+			sf::SoundBuffer D;
+			sf::SoundBuffer DS;
+			sf::SoundBuffer E;
+			sf::SoundBuffer F;
+			sf::SoundBuffer FS;
+			sf::SoundBuffer G;
+			sf::SoundBuffer GS;
+			sf::SoundBuffer A;
+			sf::SoundBuffer AS;
+			sf::SoundBuffer B;
+			sf::SoundBuffer C_High;
+		}
+
+		namespace Low {
+			sf::SoundBuffer C;
+			sf::SoundBuffer CS;
+			sf::SoundBuffer D;
+			sf::SoundBuffer DS;
+			sf::SoundBuffer E;
+			sf::SoundBuffer F;
+			sf::SoundBuffer FS;
+			sf::SoundBuffer G;
+			sf::SoundBuffer GS;
+			sf::SoundBuffer A;
+			sf::SoundBuffer AS;
+			sf::SoundBuffer B;
+			sf::SoundBuffer C_High;
+		}
+	}
+
+	namespace Guitar {
+		namespace High {
+			sf::SoundBuffer C;
+			sf::SoundBuffer CS;
+			sf::SoundBuffer D;
+			sf::SoundBuffer DS;
+			sf::SoundBuffer E;
+			sf::SoundBuffer F;
+			sf::SoundBuffer FS;
+			sf::SoundBuffer G;
+			sf::SoundBuffer GS;
+			sf::SoundBuffer A;
+			sf::SoundBuffer AS;
+			sf::SoundBuffer B;
+			sf::SoundBuffer C_High;
+		}
+
+		namespace Medium {
+			sf::SoundBuffer C;
+			sf::SoundBuffer CS;
+			sf::SoundBuffer D;
+			sf::SoundBuffer DS;
+			sf::SoundBuffer E;
+			sf::SoundBuffer F;
+			sf::SoundBuffer FS;
+			sf::SoundBuffer G;
+			sf::SoundBuffer GS;
+			sf::SoundBuffer A;
+			sf::SoundBuffer AS;
+			sf::SoundBuffer B;
+			sf::SoundBuffer C_High;
+		}
+
+		namespace Low {
+			sf::SoundBuffer C;
+			sf::SoundBuffer CS;
+			sf::SoundBuffer D;
+			sf::SoundBuffer DS;
+			sf::SoundBuffer E;
+			sf::SoundBuffer F;
+			sf::SoundBuffer FS;
+			sf::SoundBuffer G;
+			sf::SoundBuffer GS;
+			sf::SoundBuffer A;
+			sf::SoundBuffer AS;
+			sf::SoundBuffer B;
+			sf::SoundBuffer C_High;
+		}
+	}
+
+	namespace Trumpet {
+		namespace High {
+			sf::SoundBuffer C;
+			sf::SoundBuffer CS;
+			sf::SoundBuffer D;
+			sf::SoundBuffer DS;
+			sf::SoundBuffer E;
+			sf::SoundBuffer F;
+			sf::SoundBuffer FS;
+			sf::SoundBuffer G;
+			sf::SoundBuffer GS;
+			sf::SoundBuffer A;
+			sf::SoundBuffer AS;
+			sf::SoundBuffer B;
+			sf::SoundBuffer C_High;
+		}
+
+		namespace Medium {
+			sf::SoundBuffer C;
+			sf::SoundBuffer CS;
+			sf::SoundBuffer D;
+			sf::SoundBuffer DS;
+			sf::SoundBuffer E;
+			sf::SoundBuffer F;
+			sf::SoundBuffer FS;
+			sf::SoundBuffer G;
+			sf::SoundBuffer GS;
+			sf::SoundBuffer A;
+			sf::SoundBuffer AS;
+			sf::SoundBuffer B;
+			sf::SoundBuffer C_High;
+		}
+
+		namespace Low {
+			sf::SoundBuffer C;
+			sf::SoundBuffer CS;
+			sf::SoundBuffer D;
+			sf::SoundBuffer DS;
+			sf::SoundBuffer E;
+			sf::SoundBuffer F;
+			sf::SoundBuffer FS;
+			sf::SoundBuffer G;
+			sf::SoundBuffer GS;
+			sf::SoundBuffer A;
+			sf::SoundBuffer AS;
+			sf::SoundBuffer B;
+			sf::SoundBuffer C_High;
+		}
+	}
+}
 
 #endif
