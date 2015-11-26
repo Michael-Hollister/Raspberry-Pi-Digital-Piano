@@ -15,56 +15,39 @@ using namespace std;
 int main()
 {
 	initialization();
+	
+	// Main loop
+	while (true) {
+		
+		if (Button::Data::instrumentChangePressed == false) {
+			if (digitalRead(Button::InstrumentChange) == true) {
+				instrumentChange(currentInstrument);
+				Button::Data::instrumentChangePressed = true;
+			}
+		}
+		
+		if (Button::Data::instrumentChangePressed == true) {
+			if (digitalRead(Button::InstrumentChange) == false) {
+				Button::Data::instrumentChangePressed = false;
+			}
+		}
 
-	system("sleep 10");
+		// ---
 
-	/*
-   string currentInstrument;
-   string currentOctave;
-
-   bool instrumentButton;
-   bool octaveButton;
-
-   while (1) // Infinite loop
-   {
-      while (instrumentButton == 1) // While the instrument button is pressed...
-      {
-         if (currentInstrument == "piano")
-         {
-            instrumentChange("guitar", currentInstrument);
-            displayChange(currentInstrument, currentOctave);
-         }
-         else if (currentInstrument == "guitar")
-         {
-            instrumentChange("trumpet", currentInstrument);
-            displayChange(currentInstrument, currentOctave);
-         }
-         else
-         {
-            instrumentChange("piano", currentInstrument);
-            displayChange(currentInstrument, currentOctave);
-         }
-      }
-
-      while (octaveButton == 1) // While the octave button is pressed...
-      {
-         if (currentOctave == "medium")
-         {
-            octaveChange("high", currentOctave);
-            displayChange(currentInstrument, currentOctave);
-         }
-         else if (currentOctave == "high")
-         {
-            octaveChange("low", currentOctave);
-            displayChange(currentInstrument, currentOctave);
-         }
-         else
-         {
-            octaveChange("medium", currentOctave);
-            displayChange(currentInstrument, currentOctave);
-         }
-      }
-   //}*/
+		if (Button::Data::octaveChangePressed == false) {
+			if (digitalRead(Button::OctaveChange) == true) {
+				octaveChange(currentOctave);
+				Button::Data::octaveChangePressed = true;
+			}
+		}
+		
+		if (Button::Data::octaveChangePressed == true) {
+			if (digitalRead(Button::OctaveChange) == false) {
+				Button::Data::octaveChangePressed = false;
+			}
+		}
+		
+	}
 
    return 0; // Exit program
 }
@@ -92,6 +75,7 @@ void initialization(void) {
 	// ---
 
 
+	pinInitialization();
 
 	// Defaults setup
 	currentInstrument = Instrument::Piano;
@@ -100,6 +84,14 @@ void initialization(void) {
 	displayChange(currentInstrument, currentOctave);
 }
 
+void pinInitialization(void) {
+	// Pull-down resistors are enabled since no physical resistors are used.
+	pinMode(Button::InstrumentChange, INPUT);
+	pullUpDnControl(Button::InstrumentChange, PUD_DOWN);
+	pinMode(Button::OctaveChange, INPUT);
+	pullUpDnControl(Button::OctaveChange, PUD_DOWN);
+	
+}
 void instrumentChange(Instrument & currentInstrument) // Function to change instrument
 {
    switch (currentInstrument)

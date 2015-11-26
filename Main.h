@@ -30,25 +30,50 @@
 static int lcdHandle;
 // ---
 
+namespace Button {
+	namespace Data {
+		struct ButtonData {
+			bool pressed = false;
 
-// GPIO pin number mappings
-enum Button {
-	C = 18,
-	CS = 23,
-	D = 24,
-	DS = 25,
-	E = 12,
-	F = 16,
-	FS = 20,
-	G = 21,
-	GS = 4,
-	A = 17,
-	AS = 27,
-	B = 22,
-	C_High = 5,
-	InstrumentChange = 17,
-	OctaveChange = 4
-};
+		};
+
+		ButtonData C;
+		ButtonData CS;
+		ButtonData D;
+		ButtonData DS;
+		ButtonData E;
+		ButtonData F;
+		ButtonData FS;
+		ButtonData G;
+		ButtonData GS;
+		ButtonData A;
+		ButtonData AS;
+		ButtonData B;
+		ButtonData C_High;
+
+		bool instrumentChangePressed = false;
+		bool octaveChangePressed = false;
+	}
+
+	// GPIO pin number mappings
+	enum {
+		C = 5,
+		CS = 6,
+		D = 13,
+		DS = 21,
+		E = 20,
+		F = 16,
+		FS = 12,
+		G = 25,
+		GS = 24,
+		A = 23,
+		AS = 18,
+		B = 27,
+		C_High = 22,
+		InstrumentChange = 17,
+		OctaveChange = 4
+	};
+}
 
 enum Instrument {
 	Piano,
@@ -65,6 +90,7 @@ enum Octave {
 
 
 void initialization(void);
+void pinInitialization(void);
 void instrumentChange(Instrument & currentInstrument);
 void octaveChange(Octave & currentOctave);
 void displayChange(Instrument currentInstrument, Octave currentOctave);
