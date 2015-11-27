@@ -104,12 +104,6 @@ void initialization(void) {
 }
 
 void pinInitialization(void) {
-	// Pull-down resistors are enabled since no physical resistors are used.
-	pinMode(Button::InstrumentChange, INPUT);
-	pullUpDnControl(Button::InstrumentChange, PUD_DOWN);
-	pinMode(Button::OctaveChange, INPUT);
-	pullUpDnControl(Button::OctaveChange, PUD_DOWN);
-	
 	pinMode(Button::C, INPUT);
 	pinMode(Button::CS, INPUT);
 	pinMode(Button::D, INPUT);
@@ -123,21 +117,24 @@ void pinInitialization(void) {
 	pinMode(Button::AS, INPUT);
 	pinMode(Button::B, INPUT);
 	pinMode(Button::C_High, INPUT);
+	pinMode(Button::InstrumentChange, INPUT);
+	pinMode(Button::OctaveChange, INPUT);
 
-	// Pull-up resistors are enabled since 110 ohm resistors don't always work...
-	pullUpDnControl(Button::C, PUD_UP);
-	pullUpDnControl(Button::CS, PUD_UP);
-	pullUpDnControl(Button::D, PUD_UP);
-	pullUpDnControl(Button::DS, PUD_UP);
-	pullUpDnControl(Button::E, PUD_UP);
-	pullUpDnControl(Button::F, PUD_UP);
-	pullUpDnControl(Button::FS, PUD_UP);
-	pullUpDnControl(Button::G, PUD_UP);
-	pullUpDnControl(Button::GS, PUD_UP);
-	pullUpDnControl(Button::A, PUD_UP);
-	pullUpDnControl(Button::AS, PUD_UP);
-	pullUpDnControl(Button::B, PUD_UP);
-	pullUpDnControl(Button::C_High, PUD_UP);
+	pullUpDnControl(Button::C, PUD_DOWN);
+	pullUpDnControl(Button::CS, PUD_DOWN);
+	pullUpDnControl(Button::D, PUD_DOWN);
+	pullUpDnControl(Button::DS, PUD_DOWN);
+	pullUpDnControl(Button::E, PUD_DOWN);
+	pullUpDnControl(Button::F, PUD_DOWN);
+	pullUpDnControl(Button::FS, PUD_DOWN);
+	pullUpDnControl(Button::G, PUD_DOWN);
+	pullUpDnControl(Button::GS, PUD_DOWN);
+	pullUpDnControl(Button::A, PUD_DOWN);
+	pullUpDnControl(Button::AS, PUD_DOWN);
+	pullUpDnControl(Button::B, PUD_DOWN);
+	pullUpDnControl(Button::C_High, PUD_DOWN);
+	pullUpDnControl(Button::InstrumentChange, PUD_DOWN);
+	pullUpDnControl(Button::OctaveChange, PUD_DOWN);
 }
 
 void soundInitialization(void) {
